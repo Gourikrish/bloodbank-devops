@@ -1,0 +1,25 @@
+.navbar {
+    background-color: #c3073f;
+    border-radius: 30px; /*Make ends circular*/
+    overflow: auto; /*Added this to fix background not showing up after inserting float in navbar li*/
+
+}
+
+.navbar li {
+    float: left; /*Make navbar horizontal*/
+    list-style: none; /*Remove bullet points*/
+    margin: 13px 20px; /*Add space between navbar items in 13px from top and 20px from left*/
+
+}
+
+.navbar li a {
+    padding: 3px 3px; /*Add space between navbar items*/
+    color: white;
+    text-decoration: none; /*Remove underline*/
+}
+
+.navbar li a:hover {
+    background-color: #ffffff;
+    color: #c3073f;
+    border-radius: 5px; /*Make ends circular*/
+}

@@ -1,0 +1,2 @@
+# Blood-Bank-Management-System
+The MERN Blood Bank System is a web-based application designed to streamline and automate the process of managing blood donations and requests within a blood bank or blood donation center. Built using the MERN (MongoDB, Express.js, React.js, Node.js) stack, this system provides a user-friendly interface and robust functionality to efficiently handle the complex operations involved in blood donation management.
