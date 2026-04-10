@@ -6,7 +6,11 @@ const DonorDashboard = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch('http://localhost:4000/donor/verify', {
+
+        // Use environment variable for backend URL
+        const backendURL = process.env.REACT_APP_API_URL;
+
+        fetch(`${backendURL}/donor/verify`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,7 +99,9 @@ const DonorDashboard = () => {
                                 <i className="bi bi-droplet-fill display-1 mb-3"></i>
                                 <h5 className="card-title">Your Blood Group</h5>
                                 <h1 className="display-3 fw-bold">{donorData.bloodGroup}</h1>
-                                <p className="mt-2">Universal {donorData.bloodGroup === 'O-' ? 'Donor' : donorData.bloodGroup === 'AB+' ? 'Recipient' : 'Type'}</p>
+                                <p className="mt-2">
+                                    Universal {donorData.bloodGroup === 'O-' ? 'Donor' : donorData.bloodGroup === 'AB+' ? 'Recipient' : 'Type'}
+                                </p>
                             </Card.Body>
                         </Card>
                     </Col>

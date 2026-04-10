@@ -1,31 +1,42 @@
 const express = require('express');
-const mongoose = require('mongoose')
-const cors = require('cors') //Used for controlling the access to the server from different origins or domains
-const dotenv = require('dotenv') //Used for storing the sensitive data in the .env file including my mongoDB string
-const DonorRoute = require('./Routes/DonorRoute')
-const AdminRoute = require('./Routes/AdminRoute')
+const mongoose = require('mongoose');
+const cors = require('cors'); // Control access from different origins/domains
+const dotenv = require('dotenv'); // Store sensitive data like MongoDB string
+const DonorRoute = require('./Routes/DonorRoute');
+const AdminRoute = require('./Routes/AdminRoute');
+
+dotenv.config(); // Load environment variables first
 
 const app = express();
-const PORT = 4000;
 
-app.use(express.json()) // for parsing application/json
-app.use(cors())
+// Use PORT from environment or fallback to 4000
+const PORT = process.env.PORT || 4000;
 
-app.use('/donor', DonorRoute)
-app.use('/admin', AdminRoute)
+// Middleware
+app.use(express.json()); // for parsing application/json
+app.use(cors()); // allow all origins (you can restrict if needed)
 
-dotenv.config()
+// Routes
+app.use('/donor', DonorRoute);
+app.use('/admin', AdminRoute);
 
-mongoose.connect(process.env.DATABASE_STRING)
-.then(() => {
-    console.log("Connected to the Blood Bank Database")
+// MongoDB connection using env variable
+// If running in Docker and MongoDB container, DATABASE_STRING should point to Mongo service
+const mongoURI = process.env.DATABASE_STRING || 'mongodb://host.docker.internal:27017/bloodbank';
+
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
+.then(() => console.log("Connected to the Blood Bank Database"))
+.catch(err => console.error("MongoDB connection error:", err));
 
+// Test route
 app.get('/', (req, res) => {
-    res.send("This is the backend server for the Blood Bank Management System")
-})
+    res.send("This is the backend server for the Blood Bank Management System");
+});
 
+// Start server
 app.listen(PORT, () => {
-    console.log(`Backend Server is running on port ${PORT}`)
-})
-
+    console.log(`Backend Server is running on port ${PORT}`);
+});
