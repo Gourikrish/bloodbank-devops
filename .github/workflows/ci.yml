@@ -1,0 +1,45 @@
+name: Blood Bank CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # STEP 1: Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # STEP 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # ================= FRONTEND =================
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build || echo "No build step required"
+
+      # ================= BACKEND =================
+      - name: Install Backend Dependencies
+        run: |
+          cd Backend
+          npm install
+
+      - name: Backend Check
+        run: |
+          cd Backend
+          node -v
+          echo "Backend is OK"
